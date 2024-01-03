@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-const SERVER_URL = process.env.SERVER_URL || 'http://localhost:3500'
+const SERVER_URL = import.meta.env.SERVER_URL || 'http://localhost:3500'
 const socket: Socket = io(SERVER_URL);
 
 interface MessageData {
@@ -10,13 +10,13 @@ interface MessageData {
 }
 
 function App() {
+  const currentUserID = socket?.id?.slice(0, 5);
   const chatWindowRef = useRef<HTMLDivElement>(null);
 
   const [msgs, setMsgs] = useState<string[]>([]);
   const [notification, setNotification] = useState<string | null>(null);
   const [newMsg, setNewMsg] = useState<string>('');
 
-  const currentUserID = socket?.id?.slice(0, 5);
 
   useEffect(() => {
     socket.on('welcome', (message: string) => {
