@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-const socket: Socket = io('http://localhost:3500');
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost:3500'
+const socket: Socket = io(SERVER_URL);
 
 interface MessageData {
   sender?: string;
